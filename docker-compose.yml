@@ -1,0 +1,21 @@
+services:
+  database:
+    container_name: data_science_introduction_mysql # 컨테이너 이름 확인을 편하게 하기 위해 설정
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: news_sentiment_db
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - news-db-data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+
+volumes:
+  news-db-data:
